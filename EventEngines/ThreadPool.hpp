@@ -13,35 +13,34 @@ namespace EventEngines
 class ThreadPool
 {
 public:
-	typedef std::shared_ptr<ThreadPool> Ptr;
+  typedef std::shared_ptr<ThreadPool> Ptr;
 
 public:
-	explicit ThreadPool(EventDemultiplexer::Ptr, size_t);
-	~ThreadPool();
+  explicit ThreadPool(EventDemultiplexer::Ptr, size_t);
+  ~ThreadPool();
 
-	void add(EventHandler::Ptr);
-	void modify(EventSource::Ptr);
-	void remove(EventSource::Descriptor);
-	void eventLoop();
-	void interrupt(bool);
-
-private:
-	ThreadPool(const ThreadPool&);
-	ThreadPool& operator=(const ThreadPool&);
+  void add(EventHandler::Ptr);
+  void modify(EventSource::Ptr);
+  void remove(EventSource::Descriptor);
+  void eventLoop();
+  void interrupt(bool);
 
 private:
-	typedef std::map<EventSource::Descriptor, EventHandler::Ptr> t_handlers;
-	typedef std::pair<EventHandler::Ptr, EventSource::EventTypes> t_toHandle;
-	typedef std::vector<t_toHandle> t_toHandles;
+  ThreadPool(const ThreadPool&);
+  ThreadPool& operator=(const ThreadPool&);
 
-	std::mutex m_mutex;
-	bool m_run;
-	t_handlers m_handlers;
-	EventDemultiplexer::Ptr m_eventDemultiplexer;
-	Threading::ThreadPool m_threadPool;
+private:
+  typedef std::map<EventSource::Descriptor, EventHandler::Ptr> t_handlers;
+  typedef std::pair<EventHandler::Ptr, EventSource::EventTypes> t_toHandle;
+  typedef std::vector<t_toHandle> t_toHandles;
+
+  std::mutex m_mutex;
+  bool m_run;
+  t_handlers m_handlers;
+  EventDemultiplexer::Ptr m_eventDemultiplexer;
+  Threading::ThreadPool m_threadPool;
 }; //class ThreadPool
 
 } //namespace EventEngines
 
 #endif //EVENT_ENGINES_THREAD_POOL_HPP
-

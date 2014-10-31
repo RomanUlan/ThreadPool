@@ -1,7 +1,7 @@
 #include "SocketES.hpp"
 
 SocketES::SocketES(Socket::Ptr p_socket)
- : EventSource(EventTypes()), m_socket(p_socket)
+  : EventSource(EventTypes()), m_socket(p_socket)
 {
 }
 
