@@ -125,7 +125,7 @@ void Epoll::remove(Socket::Descriptor p_fd) const
 {
   if (::epoll_ctl(m_epollFd, EPOLL_CTL_DEL, p_fd, 0) < 0)
   {
-    throw ::std::runtime_error("Cannot remove fd from epoll");
+    throw std::runtime_error("Cannot remove fd from epoll");
   }
 }
 
@@ -137,7 +137,7 @@ void Epoll::wait(Events& p_events) const
   int eventsLen = ::epoll_wait(m_epollFd, events.get(), m_size, -1);
   if (eventsLen < 0)
   {
-    throw ::std::runtime_error("Epoll wait failed");
+    throw std::runtime_error("Epoll wait failed");
   }
 
   for (int i = 0; i < eventsLen; ++i)
@@ -177,3 +177,4 @@ void Epoll::epollCtl(int p_option, int p_fd, const EventTypes& p_ets) const
     throw std::runtime_error("Epoll ctl failed");
   }
 }
+

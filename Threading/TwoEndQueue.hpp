@@ -29,8 +29,8 @@ private:
 //class TwoEndQueue
 
 template<class T>
-TwoEndQueue<T>::TwoEndQueue() :
-    m_mutex(), m_condition(), m_queue()
+TwoEndQueue<T>::TwoEndQueue()
+  : m_mutex(), m_condition(), m_queue()
 {
 }
 
@@ -42,7 +42,7 @@ TwoEndQueue<T>::~TwoEndQueue()
 template<class T>
 void TwoEndQueue<T>::pushFront(const T& p_t)
 {
-  std::unique_lock < std::mutex > lock(m_mutex);
+  std::unique_lock<std::mutex> lock(m_mutex);
   m_queue.push_front(p_t);
   m_condition.notify_one();
 }
@@ -50,7 +50,7 @@ void TwoEndQueue<T>::pushFront(const T& p_t)
 template<class T>
 void TwoEndQueue<T>::pushBack(const T& p_t)
 {
-  std::unique_lock < std::mutex > lock(m_mutex);
+  std::unique_lock<std::mutex> lock(m_mutex);
   m_queue.push_back(p_t);
   m_condition.notify_one();
 }
@@ -60,7 +60,7 @@ T TwoEndQueue<T>::pop()
 {
   std::unique_ptr<T> result;
   {
-    std::unique_lock < std::mutex > lock(m_mutex);
+    std::unique_lock<std::mutex> lock(m_mutex);
     while (m_queue.empty())
       m_condition.wait(lock);
 
